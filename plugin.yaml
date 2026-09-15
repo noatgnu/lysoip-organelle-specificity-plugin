@@ -1,0 +1,94 @@
+plugin:
+  id: "lysoip-organelle-specificity"
+  name: "Lyso-IP Organelle Specificity"
+  description: "Rewards a curated marker protein enriched toward IP, penalizes it more heavily if enriched toward WCL instead"
+  version: "1.0.0"
+  author: "CauldronGO Team"
+  category: "lysoip-qc"
+  icon: "biotech"
+  repository: "https://github.com/noatgnu/lysoip-organelle-specificity-plugin"
+
+runtime:
+  environments: ["python"]
+  entrypoint: "lysoip_organelle_specificity.py"
+
+diagram:
+  enabled: true
+
+inputs:
+  - name: "differential_expression_file"
+    label: "Differential Expression"
+    type: "file"
+    required: true
+    accept: ".tsv,.txt"
+    description: "differential_expression.tsv from the Lyso-IP Differential Expression plugin"
+
+  - name: "organelle_list"
+    label: "Expected Organelle List"
+    type: "select"
+    required: true
+    default: "LSD + Lysosome"
+    options:
+      - value: "LSD (Platt 2018)"
+        label: "LSD (Platt 2018) (53 genes)"
+      - value: "Lysosome (Hein 2025)"
+        label: "Lysosome (Hein 2025) (158 genes)"
+      - value: "LSD + Lysosome"
+        label: "LSD + Lysosome (180 genes)"
+      - value: "ER (Hein 2025)"
+        label: "ER (Hein 2025) (349 genes)"
+      - value: "Golgi (Hein 2025)"
+        label: "Golgi (Hein 2025) (87 genes)"
+      - value: "Endosome (Park and Itzhak 2022)"
+        label: "Endosome (Park and Itzhak 2022) (93 genes)"
+      - value: "Mitochondria (Rath 2021)"
+        label: "Mitochondria (Rath 2021) (1136 genes)"
+      - value: "Ribosome (Nakao 2004)"
+        label: "Ribosome (Nakao 2004) (80 genes)"
+      - value: "Nucleus (Leung 2006)"
+        label: "Nucleus (Leung 2006) (410 genes)"
+    description: "Curated marker-gene list bundled with this plugin, converted from lysoip_qc_framework's Curated Organelle Protein Lists.xlsx"
+
+  - name: "reward"
+    label: "Reward"
+    type: "number"
+    required: false
+    default: 1.0
+    min: 0
+    step: 0.1
+    description: "Multiplier applied to abs(fold_change) for a marker enriched toward IP"
+
+  - name: "penalty"
+    label: "Penalty"
+    type: "number"
+    required: false
+    default: 2.0
+    min: 0
+    step: 0.1
+    description: "Multiplier applied to abs(fold_change) for a marker enriched toward WCL instead"
+
+outputs:
+  - name: "organelle_specificity"
+    path: "organelle_specificity.tsv"
+    type: "data"
+    description: "Per-protein organelle specificity score for marker genes only (non-members are untested, not zero)"
+    format: "tsv"
+
+execution:
+  argsMapping:
+    differential_expression_file: "--differential_expression_file"
+    organelle_list: "--organelle_list"
+    reward: "--reward"
+    penalty: "--penalty"
+
+  outputDir: "--output_folder"
+
+  requirements:
+    python: ">=3.11"
+    packages: []
+
+example:
+  enabled: true
+  values:
+    differential_expression_file: "examples/differential_expression.tsv"
+    organelle_list: "LSD + Lysosome"

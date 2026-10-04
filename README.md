@@ -49,8 +49,8 @@ flowchart TD
 |------|-------|------|----------|---------|------------|
 | `differential_expression_file` | Differential Expression | file | Yes | - | Always visible |
 | `organelle_list` | Expected Organelle List | select (LSD (Platt 2018) (53 genes), Lysosome (Hein 2025) (158 genes), LSD + Lysosome (180 genes), ER (Hein 2025) (349 genes), Golgi (Hein 2025) (87 genes), Endosome (Park and Itzhak 2022) (93 genes), Mitochondria (Rath 2021) (1136 genes), Ribosome (Nakao 2004) (80 genes), Nucleus (Leung 2006) (410 genes)) | Yes | LSD + Lysosome | Always visible |
-| `reward` | Reward | number (min: 0, step: 0) | No | 1 | Always visible |
-| `penalty` | Penalty | number (min: 0, step: 0) | No | 2 | Always visible |
+| `reward` | Reward | number (min: 0, step: 0.1) | No | 1 | Always visible |
+| `penalty` | Penalty | number (min: 0, step: 0.1) | No | 2 | Always visible |
 
 ### Input Details
 
@@ -90,8 +90,8 @@ Multiplier applied to abs(fold_change) for a marker enriched toward WCL instead
 This plugin includes example data for testing:
 
 ```yaml
-  differential_expression_file: examples/differential_expression.tsv
   organelle_list: LSD + Lysosome
+  differential_expression_file: examples/differential_expression.tsv
 ```
 
 Load example data by clicking the **Load Example** button in the UI.

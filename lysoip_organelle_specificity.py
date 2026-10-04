@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""Lyso-IP QC organelle specificity scorer: rewards a marker protein enriched
-toward IP, penalizes it more heavily if enriched toward WCL instead.
-
-Ported from lysoip_qc_framework/apps/scoring/scorers/organelle_specificity.py.
-"""
+"""Rewards a marker protein enriched toward IP, penalizes it more heavily if enriched toward WCL."""
 
 import argparse
 import csv

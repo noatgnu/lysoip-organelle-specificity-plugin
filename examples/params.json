@@ -1,0 +1,4 @@
+{
+  "differential_expression_file": "examples/differential_expression.tsv",
+  "organelle_list": "LSD + Lysosome"
+}
